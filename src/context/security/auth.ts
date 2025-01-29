@@ -7,11 +7,14 @@ import Message from "../responses/Message";
 import Usuario from "../../usuarios/domain/Usuario";
 import UsuarioUseCases from "../../usuarios/application/usuario.usecases";
 import UsuarioRepositoryPostgres from "../../usuarios/infrastructure/db/usuario.repository.postgres";
+import Administrador from "../../administradores/domain/Administrador";
+import AdministradorUseCases from "../../administradores/application/administrador.usescases";
+import AdministradorRepositoryPostgres from "../../administradores/infrastructure/db/administrador.repository.postgres";
 
 
 const SECRET_KEY: Secret = "malladetaSecretKey";
 
-const adminUseCases = new AdminUseCases(new AdminRepositoryMongoDB);
+const adminUseCases = new AdministradorUseCases(new AdministradorRepositoryPostgres);
 const usuarioUseCases = new UsuarioUseCases(new UsuarioRepositoryPostgres);
 
 const createToken = (usuario: Usuario): string => {
@@ -23,11 +26,11 @@ const createToken = (usuario: Usuario): string => {
   return jwt.sign(payload, SECRET_KEY, { expiresIn: "1 days" });
 };
 
-const createTokenAdmin = (admin: Admin): string => {
+const createTokenAdmin = (admin: Administrador): string => {
   const payload = {
     admin: {
       alias: admin.alias,
-      tienda: admin.tienda
+      nombreTienda: admin.nombreTienda
     },
   };
   return jwt.sign(payload, SECRET_KEY, { expiresIn: "1 days" });

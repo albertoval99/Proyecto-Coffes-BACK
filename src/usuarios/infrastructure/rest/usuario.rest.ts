@@ -10,11 +10,15 @@ const usuarioUseCases = new UsuarioUseCases(new UsuarioRepositoryPostgres);
 // POST http://localhost:3000/api/usuarios/registro
 router.post("/registro", async (req: Request, res: Response) => {
     try {
-      const nuevoUsuario = req.body;
-      const response = await usuarioUseCases.registro(nuevoUsuario);
-      res.status(201).json(`El usuario ${response.alias} ha sido creado con exito`);
+        const nuevoUsuario = req.body;
+        const response = await usuarioUseCases.registro(nuevoUsuario);
+        res.status(201).json({ message: `El usuario ${response.alias} ha sido creado con éxito.` });
+
     } catch (error) {
-      const message: Message = { text: `Error registrando usuario: ${error}` };
-      res.status(500).json(message);
+        const message = { text: `Error registrando usuario: ${error.message || error}` };
+        console.error(error);
+        res.status(500).json(message);
     }
-  });
+});
+
+export default router;

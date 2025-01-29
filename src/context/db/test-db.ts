@@ -1,4 +1,5 @@
-import pool from "../db/postgres.db";
+import { pool } from "../db/postgres.db";
+
 
 export const testDB = async () => {
   try {

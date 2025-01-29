@@ -1,20 +1,22 @@
-CREATE TABLE usuario (
+CREATE TABLE usuarios (
     alias VARCHAR(50) PRIMARY KEY,
     password VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE tienda (
+CREATE TABLE tiendas (
     nombre VARCHAR(100) PRIMARY KEY
 );
+INSERT INTO tiendas (nombre) VALUES ('Mercadona');
 
-CREATE TABLE admin (
+CREATE TABLE administradores (
     alias VARCHAR(50) PRIMARY KEY,
     password VARCHAR(255) NOT NULL,
     nombreTienda VARCHAR(100) NOT NULL,
     FOREIGN KEY (nombreTienda) REFERENCES tienda(nombre) ON DELETE CASCADE
 );
 
-CREATE TABLE cafe (
+
+CREATE TABLE cafes (
     nombre VARCHAR(100),
     tueste VARCHAR(100),
     precio DECIMAL(10, 2) NOT NULL,
@@ -25,7 +27,7 @@ CREATE TABLE cafe (
 );
 
 
-CREATE TABLE valoracion (
+CREATE TABLE valoraciones (
     nombreCafe VARCHAR(100),
     tuesteCafe VARCHAR(100),
     aliasUsuario VARCHAR(50),
@@ -36,14 +38,14 @@ CREATE TABLE valoracion (
 );
 
 
-CREATE TABLE carrito (
+CREATE TABLE carritos (
     id SERIAL PRIMARY KEY,
     aliasUsuario VARCHAR(50),
     FOREIGN KEY (aliasUsuario) REFERENCES usuario(alias) ON DELETE CASCADE
 );
 
 
-CREATE TABLE cantidad_cafe_carrito (
+CREATE TABLE cantidades_cafes_carritos (
     nombreCafe VARCHAR(100),
     tuesteCafe VARCHAR(100),
     idCarrito INT,
@@ -54,7 +56,7 @@ CREATE TABLE cantidad_cafe_carrito (
 );
 
 
-CREATE TABLE pedido (
+CREATE TABLE pedidos (
     id SERIAL PRIMARY KEY,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     aliasUsuario VARCHAR(50),
@@ -62,7 +64,7 @@ CREATE TABLE pedido (
 );
 
 
-CREATE TABLE cafe_pedido (
+CREATE TABLE cafes_pedidos (
     idPedido INT,
     nombreCafe VARCHAR(100),
     tuesteCafe VARCHAR(100),

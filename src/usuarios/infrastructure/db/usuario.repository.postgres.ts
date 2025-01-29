@@ -1,12 +1,12 @@
 import Usuario from "../../domain/Usuario";
 import UsuarioRepository from "../../domain/usuario.repository";
-import executeQuery from "../../../context/db/postgres.db";
+import { executeQuery } from "../../../context/db/postgres.db";
 
 export default class UsuarioRepositoryPostgres implements UsuarioRepository {
 
     async registro(usuario: Usuario): Promise<Usuario> {
 
-        const query = `insert into usuario (alias, password) values ($1, $2) returning *`;
+        const query = `insert into usuarios (alias, password) values ($1, $2) returning *`;
         const values = [usuario.alias, usuario.password];
 
         const rows: any[] = await executeQuery(query, values);
