@@ -1,0 +1,12 @@
+INSTALACIONES TS
+npm init->Y enter a todo y yes
+npm install express
+npm i –save -dev @types/express
+Añadir fichero tsconfig.json
+Crear el .gitignore(y no subir node_modules ni .env)
+En el package.json dentro de scripts,quitarle el test y añadirle esto: "dev": "nodemon src/index.ts"
+Y en main en la tercera linea cambiar: "main": "index.js", por -->  "main": "src/index.js",
+Crear el index.ts y el context dentro de src.
+En la carpeta del proyecto solo estara:node_modules,src,.gitignore,los 2 packages.json y tsconfig.json
+
+Instalar node_modules clase--> npm install
