@@ -1,0 +1,99 @@
+import { NextFunction, Request, Response } from "express";
+import jwt, { Secret } from "jsonwebtoken";//npm install jsonwebtoken
+
+import Message from "../responses/Message";
+
+
+import Usuario from "../../usuarios/domain/Usuario";
+import UsuarioUseCases from "../../usuarios/application/usuario.usecases";
+import UsuarioRepositoryPostgres from "../../usuarios/infrastructure/db/usuario.repository.postgres";
+
+
+const SECRET_KEY: Secret = "malladetaSecretKey";
+
+const adminUseCases = new AdminUseCases(new AdminRepositoryMongoDB);
+const usuarioUseCases = new UsuarioUseCases(new UsuarioRepositoryPostgres);
+
+const createToken = (usuario: Usuario): string => {
+  const payload = {
+    user: {
+      alias: usuario.alias,
+    },
+  };
+  return jwt.sign(payload, SECRET_KEY, { expiresIn: "1 days" });
+};
+
+const createTokenAdmin = (admin: Admin): string => {
+  const payload = {
+    admin: {
+      alias: admin.alias,
+      tienda: admin.tienda
+    },
+  };
+  return jwt.sign(payload, SECRET_KEY, { expiresIn: "1 days" });
+};
+
+
+const isAuth = (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const authHeader = req.headers["authorization"];
+    const token: string | undefined = authHeader && authHeader.split(" ")[1];
+    if (token) {
+      const decoded: any = jwt.verify(token, SECRET_KEY);
+      req.body.user = decoded.user;
+      req.body.admin = decoded.admin;
+      next();
+    } else throw new Error("Token no proporcionado");
+  } catch (err) {
+    console.error(err);
+    const message: Message = { text: err.message || "Token inválido o expirado" };
+    res.status(401).json(message);
+  }
+};
+
+
+const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const admin = req.body.admin;
+    if (admin) {
+      const comprobarAdmin = await adminUseCases.getAdminById(admin.id);
+      if (!comprobarAdmin) {
+        throw new Error("No se ha encontrado ese administrador");
+      }
+      next();
+    } else {
+      res.status(401).json({ "mensaje": "No autorizado" });
+    }
+  } catch (err) {
+    console.error(err);
+    const message: Message = { text: String(err) };
+    res.status(401).json(message);
+  }
+};
+
+const isUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const user = req.body.user;
+    if (user) {
+      const comprobarUser = await usuarioUseCases.getUserById(user.id);
+      if (!comprobarUser) {
+        throw new Error("No se ha encontrado ese usuario");
+      }
+      next();
+    } else {
+      res.status(401).json({ "mensaje": "No autorizado" });
+    }
+  } catch (err) {
+    console.error(err);
+    const message: Message = { text: String(err) };
+    res.status(401).json(message);
+  }
+};
+
+
+const decode = (token: string) => {
+  return jwt.decode(token);
+};
+
+
+export { decode, createToken, createTokenAdmin, isAuth, isAdmin, isUser };
