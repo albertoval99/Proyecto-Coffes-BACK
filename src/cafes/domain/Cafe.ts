@@ -5,5 +5,4 @@ export default interface Cafe{
     origen:string;
     peso:number;
     nombreTienda:string;
-    aliasAdmin:string;
 }

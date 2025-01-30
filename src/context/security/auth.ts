@@ -28,7 +28,7 @@ const createTokenAdmin = (admin: Administrador): string => {
   const payload = {
     admin: {
       alias: admin.alias,
-      nombreTienda: admin.nombreTienda
+      nombreTienda: admin.nombreTienda 
     },
   };
   return jwt.sign(payload, SECRET_KEY, { expiresIn: "1 days" });

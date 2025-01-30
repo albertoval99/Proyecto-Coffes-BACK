@@ -21,8 +21,6 @@ router.post("/crear",isAuth,isAdmin,async (req:Request,res:Response)=>{
             precio:req.body.precio,
             peso:req.body.peso,
             nombreTienda:req.body.admin.nombreTienda,
-            //nombreTienda:req.body.nombreTienda,
-            aliasAdmin: req.body.admin.alias 
         };
        
         const response= await cafeUseCases.crearCafe(nuevoCafe);

@@ -14,7 +14,7 @@ export default class AdministradorRepositoryPostgres implements AdminRepository 
             return {
             alias: result[0].alias,
             password: result[0].password,
-            nombreTienda: result[0].nombreTienda
+            nombreTienda: result[0].nombretienda
         };
     }
     async getAdminByAlias(alias: string): Promise<Administrador> {
@@ -24,9 +24,9 @@ export default class AdministradorRepositoryPostgres implements AdminRepository 
         const result = await executeQuery(query, values);
 
         return {
-            alias: result[0],
-            password: result[0],
-            nombreTienda: result[0]
+            alias: result[0].alias,
+            password: result[0].password,
+            nombreTienda: result[0].nombretienda
         }
     }
 }

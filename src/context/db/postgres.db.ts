@@ -13,6 +13,14 @@ export const pool = new Pool({
   idleTimeoutMillis: 30000,
 });
 
+
+pool.connect()
+  .then(() => console.log("✅ Conexión a PostgreSQL exitosa ✅"))
+  .catch(err => {
+    console.error("❌ Error conectando a la base de datos:", err);
+    process.exit(1);
+  });
+
 export const executeQuery = async (sql: string, data?: any[]) => {
   const client = await pool.connect();
   try {
@@ -22,8 +30,6 @@ export const executeQuery = async (sql: string, data?: any[]) => {
     console.error("Error en la consulta:", err);
     throw err;
   } finally {
-    client.release(); 
+    client.release();
   }
 };
-
-
