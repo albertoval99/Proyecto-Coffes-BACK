@@ -17,16 +17,16 @@ export default class AdministradorRepositoryPostgres implements AdminRepository 
             nombreTienda: result[0].nombreTienda
         };
     }
-    async getAdminById(id: string): Promise<Administrador> {
-        const query = 'SELECT * FROM administradores WHERE id = $1';
-        const values = [id];
+    async getAdminByAlias(alias: string): Promise<Administrador> {
+        const query = 'SELECT * FROM administradores WHERE alias = $1';
+        const values = [alias];
 
         const result = await executeQuery(query, values);
 
         return {
-            alias: result.rows[0].alias,
-            password: result.rows[0].password,
-            nombreTienda: result.rows[0].nombreTienda
+            alias: result[0],
+            password: result[0],
+            nombreTienda: result[0]
         }
     }
 }

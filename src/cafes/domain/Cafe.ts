@@ -3,5 +3,6 @@ export default interface Cafe{
     tueste:string;
     precio:number;
     origen:string;
+    nombreTienda:string;
     aliasAdmin:string;
 }

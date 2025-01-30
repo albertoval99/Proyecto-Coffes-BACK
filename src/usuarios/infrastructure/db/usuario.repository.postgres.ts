@@ -17,9 +17,9 @@ export default class UsuarioRepositoryPostgres implements UsuarioRepository {
         };
     }
 
-    async getUserById(id: string): Promise<Usuario> {
-        const query = 'SELECT * FROM usuarios WHERE id = $1';
-        const values = [id];
+    async getUserByAlias(alias: string): Promise<Usuario> {
+        const query = 'SELECT * FROM usuarios WHERE alias = $1';
+        const values = [alias];
 
         const result = await executeQuery(query, values);
 

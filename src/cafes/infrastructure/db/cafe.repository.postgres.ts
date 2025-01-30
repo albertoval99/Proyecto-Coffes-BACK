@@ -16,6 +16,7 @@ export default class CafeRepositoryPostgres implements CafeRepository{
             tueste:rows[0].tueste,
             precio:rows[0].precio,
             origen:rows[0].origen,
+            nombreTienda:rows[0].nombreTienda,
             aliasAdmin:rows[0].aliasAdmin
         };
     }

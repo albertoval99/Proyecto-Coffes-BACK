@@ -8,7 +8,7 @@ export default class CafeUseCases{
     }
 
     async crearCafe(cafe: Cafe): Promise<Cafe> {
-        if (cafe.nombre === "" || cafe.tueste === "" || cafe.precio === 0 || cafe.origen ==="" || cafe.aliasAdmin==="") {
+        if (cafe.nombre === "" || cafe.tueste === "" || cafe.precio === 0 || cafe.origen ==="" || cafe.aliasAdmin==="" || cafe.nombreTienda==="") {
             throw new Error("No puede haber campos vacios")
         }
         return this.cafeRepository.crearCafe(cafe);

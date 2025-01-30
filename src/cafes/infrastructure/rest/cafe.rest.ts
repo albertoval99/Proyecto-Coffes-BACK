@@ -16,9 +16,10 @@ router.post("/crear",isAuth,isAdmin,async (req:Request,res:Response)=>{
         const nuevoCafe = {
             nombre:req.body.nombre,
             tueste:req.body.tueste,
-            tienda:req.body.admin.tienda,
             origen:req.body.origen,
             precio:req.body.precio,
+            tienda:req.body.admin.tienda,
+            nombreTienda:req.body.nombreTienda,
             aliasAdmin: req.body.admin.alias 
         };
        

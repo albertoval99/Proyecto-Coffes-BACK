@@ -56,7 +56,7 @@ const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const admin = req.body.admin;
     if (admin) {
-      const comprobarAdmin = await adminUseCases.getAdminById(admin.id);
+      const comprobarAdmin = await adminUseCases.getAdminByAlias(admin.alias);
       if (!comprobarAdmin) {
         throw new Error("No se ha encontrado ese administrador");
       }
@@ -75,7 +75,7 @@ const isUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = req.body.user;
     if (user) {
-      const comprobarUser = await usuarioUseCases.getUserById(user.id);
+      const comprobarUser = await usuarioUseCases.getUserByAlias(user.alias);
       if (!comprobarUser) {
         throw new Error("No se ha encontrado ese usuario");
       }

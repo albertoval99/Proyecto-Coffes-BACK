@@ -38,8 +38,8 @@ export default class UsuarioUseCases {
         }
     }
 
-    async getUserById(id: string): Promise<Usuario> {
-        const user = await this.usuarioRepository.getUserById(id);
+    async getUserByAlias(alias: string): Promise<Usuario> {
+        const user = await this.usuarioRepository.getUserByAlias(alias);
         if (!user) throw new Error("Usuario no encontrado");
         return user;
     }

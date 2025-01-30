@@ -24,8 +24,8 @@ export default class AdministradorUseCases{
         }
       }
 
-     async getAdminById(id: string): Promise<Administrador> {
-        const admin=await this.adminRepository.getAdminById(id);
+     async getAdminByAlias(alias: string): Promise<Administrador> {
+        const admin=await this.adminRepository.getAdminByAlias(alias);
         if(!admin)throw new Error("Administrador no encontrado");
         return admin;
      }
