@@ -7,6 +7,7 @@ import UsuarioRepositoryPostgres from "../../usuarios/infrastructure/db/usuario.
 import Administrador from "../../administradores/domain/Administrador";
 import AdministradorUseCases from "../../administradores/application/administrador.usescases";
 import AdministradorRepositoryPostgres from "../../administradores/infrastructure/db/administrador.repository.postgres";
+import Tienda from '../../tiendas/domain/Tienda';
 
 
 const SECRET_KEY: Secret = "malladetaSecretKey";

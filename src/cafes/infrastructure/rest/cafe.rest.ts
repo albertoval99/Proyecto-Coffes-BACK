@@ -13,13 +13,15 @@ const cafeUseCases= new CafeUseCases(new CafeRepositoryPostgres);
 router.post("/crear",isAuth,isAdmin,async (req:Request,res:Response)=>{
     try {
         console.log("Alias recibido en la solicitud:", req.body.admin.alias);
+        console.log("Tienda recibida en la solicitud:", req.body.admin.nombreTienda);
         const nuevoCafe = {
             nombre:req.body.nombre,
             tueste:req.body.tueste,
             origen:req.body.origen,
             precio:req.body.precio,
-            tienda:req.body.admin.tienda,
-            nombreTienda:req.body.nombreTienda,
+            peso:req.body.peso,
+            nombreTienda:req.body.admin.nombreTienda,
+            //nombreTienda:req.body.nombreTienda,
             aliasAdmin: req.body.admin.alias 
         };
        
