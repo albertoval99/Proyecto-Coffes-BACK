@@ -1,9 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { Secret } from "jsonwebtoken";//npm install jsonwebtoken
-
 import Message from "../responses/Message";
-
-
 import Usuario from "../../usuarios/domain/Usuario";
 import UsuarioUseCases from "../../usuarios/application/usuario.usecases";
 import UsuarioRepositoryPostgres from "../../usuarios/infrastructure/db/usuario.repository.postgres";
