@@ -21,4 +21,18 @@ router.post("/registro", async (req: Request, res: Response) => {
     }
 });
 
+// POST http://localhost:3000/api/usuarios/login
+router.post("/login", async (req: Request, res: Response) => {
+    try {
+      const { alias, password } = req.body;
+      const usuario = await usuarioUseCases.login({ alias, password });
+      const token = createToken(usuario);
+      res.status(201).json({token});
+  
+    } catch (error) {
+      const message: Message = { text: `Error registrando usuario: ${error}` };
+      res.status(500).json(message);
+    }
+  });
+
 export default router;

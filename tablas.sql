@@ -12,7 +12,7 @@ CREATE TABLE administradores (
     alias VARCHAR(50) PRIMARY KEY,
     password VARCHAR(255) NOT NULL,
     nombreTienda VARCHAR(100) NOT NULL,
-    FOREIGN KEY (nombreTienda) REFERENCES tienda(nombre) ON DELETE CASCADE
+    FOREIGN KEY (nombreTienda) REFERENCES tiendas(nombre) ON DELETE CASCADE
 );
 
 
@@ -23,7 +23,7 @@ CREATE TABLE cafes (
     origen VARCHAR(100) NOT NULL,
     aliasAdmin VARCHAR(50),
     PRIMARY KEY (nombre, tueste),
-    FOREIGN KEY (aliasAdmin) REFERENCES admin(alias) ON DELETE SET NULL
+    FOREIGN KEY (aliasAdmin) REFERENCES administradores(alias) ON DELETE SET NULL
 );
 
 
@@ -33,26 +33,24 @@ CREATE TABLE valoraciones (
     aliasUsuario VARCHAR(50),
     valoracion INT CHECK (valoracion BETWEEN 0 AND 5),
     PRIMARY KEY (nombreCafe, tuesteCafe, aliasUsuario), -- Para q un usuario no pueda valorar el mismo cafe dos veces
-    FOREIGN KEY (nombreCafe, tuesteCafe) REFERENCES cafe(nombre, tueste) ON DELETE CASCADE,
-    FOREIGN KEY (aliasUsuario) REFERENCES usuario(alias) ON DELETE CASCADE
+    FOREIGN KEY (nombreCafe, tuesteCafe) REFERENCES cafes(nombre, tueste) ON DELETE CASCADE,
+    FOREIGN KEY (aliasUsuario) REFERENCES usuarios(alias) ON DELETE CASCADE
 );
 
 
 CREATE TABLE carritos (
-    id SERIAL PRIMARY KEY,
-    aliasUsuario VARCHAR(50),
-    FOREIGN KEY (aliasUsuario) REFERENCES usuario(alias) ON DELETE CASCADE
+    aliasUsuario VARCHAR(50) PRIMARY KEY,
+    FOREIGN KEY (aliasUsuario) REFERENCES usuarios(alias) ON DELETE CASCADE
 );
-
 
 CREATE TABLE cantidades_cafes_carritos (
     nombreCafe VARCHAR(100),
     tuesteCafe VARCHAR(100),
-    idCarrito INT,
+    aliasUsuario VARCHAR(50),
     cantidad INT NOT NULL CHECK (cantidad > 0),
-    PRIMARY KEY (nombreCafe, tuesteCafe, idCarrito), -- Evita q puedas añadir 2 cafes iguales y salgan como dos diferentes
-    FOREIGN KEY (nombreCafe, tuesteCafe) REFERENCES cafe(nombre, tueste) ON DELETE CASCADE,
-    FOREIGN KEY (idCarrito) REFERENCES carrito(id) ON DELETE CASCADE
+    PRIMARY KEY (nombreCafe, tuesteCafe, aliasUsuario), -- Evita q puedas añadir 2 cafes iguales y salgan como dos diferentes
+    FOREIGN KEY (nombreCafe, tuesteCafe) REFERENCES cafes(nombre, tueste) ON DELETE CASCADE,
+    FOREIGN KEY (aliasUsuario) REFERENCES usuarios(alias) ON DELETE CASCADE
 );
 
 
@@ -60,7 +58,7 @@ CREATE TABLE pedidos (
     id SERIAL PRIMARY KEY,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     aliasUsuario VARCHAR(50),
-    FOREIGN KEY (aliasUsuario) REFERENCES usuario(alias) ON DELETE CASCADE
+    FOREIGN KEY (aliasUsuario) REFERENCES usuarios(alias) ON DELETE CASCADE
 );
 
 
@@ -70,6 +68,6 @@ CREATE TABLE cafes_pedidos (
     tuesteCafe VARCHAR(100),
     cantidad INT NOT NULL CHECK (cantidad > 0),
     precio DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (idPedido) REFERENCES pedido(id) ON DELETE CASCADE,
-    FOREIGN KEY (nombreCafe, tuesteCafe) REFERENCES cafe(nombre, tueste) ON DELETE CASCADE
+    FOREIGN KEY (idPedido) REFERENCES pedidos(id) ON DELETE CASCADE,
+    FOREIGN KEY (nombreCafe, tuesteCafe) REFERENCES cafes(nombre, tueste) ON DELETE CASCADE
 );

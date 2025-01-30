@@ -23,6 +23,21 @@ export default class UsuarioUseCases {
         return this.usuarioRepository.registro(usuario);
     }
 
+    async login(usuario: Usuario): Promise<Usuario> {
+        if(!usuario.alias) throw new Error("Falta alias");
+        if(!usuario.password) throw new Error("Falta password");
+
+        const userDB= await this.usuarioRepository.login(usuario);
+        if(!userDB) throw new Error("Usuario no encontrado");
+
+        const iguales= await compare(usuario.password,userDB.password);
+        if(iguales){
+            return userDB;
+        }else{
+            throw new Error("Usuario/contraseña no es correcto");
+        }
+    }
+
     async getUserById(id: string): Promise<Usuario> {
         const user = await this.usuarioRepository.getUserById(id);
         if (!user) throw new Error("Usuario no encontrado");

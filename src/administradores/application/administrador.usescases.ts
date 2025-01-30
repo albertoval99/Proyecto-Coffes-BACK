@@ -13,12 +13,12 @@ export default class AdministradorUseCases{
         if (!admin.alias) throw new Error("Falta alias"); 
         if (!admin.password) throw new Error("Falta password"); 
     
-        const adminBD = await this.adminRepository.login(admin);
-        if (!adminBD) throw new Error("Admin no encontrado");
+        const adminDB = await this.adminRepository.login(admin);
+        if (!adminDB) throw new Error("Admin no encontrado");
     
-        const iguales = await compare(admin.password, adminBD.password); 
+        const iguales = await compare(admin.password, adminDB.password); 
         if (iguales) {
-          return adminBD; 
+          return adminDB; 
         } else {
           throw new Error("Admin/contraseña no es correcto"); 
         }

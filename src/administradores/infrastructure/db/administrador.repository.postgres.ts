@@ -4,7 +4,7 @@ import { executeQuery } from "../../../context/db/postgres.db";
 
 export default class AdministradorRepositoryPostgres implements AdminRepository {
     async login(administrador: Administrador): Promise<Administrador> {
-        const query = 'SELECT * FROM admin WHERE alias = $1';
+        const query = 'SELECT * FROM administradores WHERE alias = $1';
         const values = [administrador.alias];
 
         const result = await executeQuery(query, values);

@@ -13,13 +13,7 @@ router.post("/login", async (req: Request, res: Response) => {
         const { alias, password } = req.body;
         const admin = await adminUseCases.login({ alias, password });
         const token = createTokenAdmin(admin);
-        res.status(201).json({
-            admin: {
-                alias: admin.alias,
-                tienda: admin.nombreTienda
-            },
-            token,
-        });
+        res.status(201).json({token});
 
     } catch (error) {
         const message: Message = { text: `Error logueando admin: ${error}` };
