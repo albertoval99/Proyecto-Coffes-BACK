@@ -39,7 +39,7 @@ CREATE TABLE valoraciones (
     aliasUsuario VARCHAR(50),
     valoracion INT CHECK (valoracion BETWEEN 0 AND 5),
     PRIMARY KEY (nombreCafe, tuesteCafe, pesoCafe,origenCafe, aliasUsuario,nombreTienda), -- Para q un usuario no pueda valorar el mismo cafe dos veces
-    FOREIGN KEY (nombreCafe, tuesteCafe,pesoCafe,origenCafe) REFERENCES cafes(nombre, tueste,peso,origen,nombreTienda) ON UPDATE CASCADE,
+    FOREIGN KEY (nombreCafe, tuesteCafe,pesoCafe,origenCafe,nombreTienda) REFERENCES cafes(nombre, tueste,peso,origen,nombreTienda) ON UPDATE CASCADE,
     FOREIGN KEY (aliasUsuario) REFERENCES usuarios(alias)
 );
 
@@ -58,7 +58,7 @@ CREATE TABLE cantidades_cafes_carritos (
     aliasUsuario VARCHAR(50),
     cantidad INT NOT NULL CHECK (cantidad > 0),
     PRIMARY KEY (nombreCafe, tuesteCafe, aliasUsuario, pesoCafe,origenCafe,nombreTienda), -- Evita q puedas añadir 2 cafes iguales y salgan como dos diferentes
-    FOREIGN KEY (nombreCafe, tuesteCafe,pesoCafe,origenCafe) REFERENCES cafes(nombre, tueste,peso,origen,nombreTienda)ON UPDATE CASCADE,
+    FOREIGN KEY (nombreCafe, tuesteCafe,pesoCafe,origenCafe,nombreTienda) REFERENCES cafes(nombre, tueste,peso,origen,nombreTienda)ON UPDATE CASCADE,
     FOREIGN KEY (aliasUsuario) REFERENCES usuarios(alias)
 );
 
@@ -80,7 +80,7 @@ CREATE TABLE cafes_pedidos (
     nombreTienda VARCHAR(100),
     cantidad INT NOT NULL CHECK (cantidad > 0),
     precio DECIMAL(10, 2) NOT NULL,
-    PRIMARY KEY(nombreCafe,tuesteCafe,origenCafe,pesoCafe,nombreTienda)
-    FOREIGN KEY (idPedido) REFERENCES pedidos(id),
+    PRIMARY KEY(nombreCafe,tuesteCafe,origenCafe,pesoCafe,nombreTienda,idPedido),
+    FOREIGN KEY (idPedido) REFERENCES pedidos(id)
     
 );
