@@ -1,17 +1,8 @@
-import express from "express";
-import usuarioRouter from "./usuarios/infrastructure/rest/usuario.rest";
-import administradorRouter from "./administradores/infrastructure/rest/administrador.rest";
-import cafeRouter from "./cafes/infrastructure/rest/cafe.rest";
-
+import app from "./server";
 const port = 3000;
-const app = express();
-app.use(express.json());
 
 app.listen(port, () => {
-  console.log(`🚀 Servidor corriendo en el puerto: ${port} 🚀`);
+  console.log(`🚀 Servidor corriendo en http://localhost:${port} 🚀`);
 });
 
-const api = "/api";
-app.use(`${api}/usuarios`, usuarioRouter);
-app.use(`${api}/administradores`, administradorRouter);
-app.use(`${api}/cafes`, cafeRouter);
+
