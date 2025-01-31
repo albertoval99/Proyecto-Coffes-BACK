@@ -6,7 +6,7 @@ CREATE TABLE usuarios (
 CREATE TABLE tiendas (
     nombre VARCHAR(100) PRIMARY KEY
 );
-INSERT INTO tiendas (nombre) VALUES ('Mercadona');
+
 
 CREATE TABLE administradores (
     alias VARCHAR(50) PRIMARY KEY,
