@@ -1,11 +1,19 @@
 CREATE TABLE usuarios (
     alias VARCHAR(50) PRIMARY KEY,
-    password VARCHAR(255) NOT NULL
+    password VARCHAR(255) NOT NULL,
+    fechaNacimiento DATE,
+    email VARCHAR(100)
 );
 
 CREATE TABLE tiendas (
     nombre VARCHAR(100) PRIMARY KEY
 );
+
+CREATE TABLE direcciones(
+    aliasUsuario VARCHAR(50) PRIMARY KEY,
+    direccion VARCHAR(200) UNIQUE,
+    FOREIGN KEY (aliasUsuario) REFERENCES usarios(alias)
+)
 
 
 CREATE TABLE administradores (
@@ -65,9 +73,11 @@ CREATE TABLE cantidades_cafes_carritos (
 
 CREATE TABLE pedidos (
     id SERIAL PRIMARY KEY,
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha DATE,
+    direccion VARCHAR(200) NOT NULL,
     aliasUsuario VARCHAR(50),
-    FOREIGN KEY (aliasUsuario) REFERENCES usuarios(alias) 
+    FOREIGN KEY (aliasUsuario) REFERENCES usuarios(alias),
+    FOREIGN KEY (direccion) REFERENCES direcciones(direccion)
 );
 
 
