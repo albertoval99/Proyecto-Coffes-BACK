@@ -12,8 +12,8 @@ CREATE TABLE tiendas (
 CREATE TABLE direcciones(
     aliasUsuario VARCHAR(50) PRIMARY KEY,
     direccion VARCHAR(200) UNIQUE,
-    FOREIGN KEY (aliasUsuario) REFERENCES usarios(alias)
-)
+    FOREIGN KEY (aliasUsuario) REFERENCES usuarios(alias)
+);
 
 
 CREATE TABLE administradores (
