@@ -3,4 +3,5 @@ export default interface Usuario{
     password:string;
     fechaNacimiento?:Date;
     email?:string;
+    
 }

@@ -44,9 +44,9 @@ export default class UsuarioUseCases {
         return user;
     }
 
-     async actualizar(usuario: Usuario): Promise<Usuario> {
-        const user= await this.usuarioRepository.actualizar(usuario);
+    //  async actualizar(usuario: Usuario): Promise<Usuario> {
+    //     const user= await this.usuarioRepository.actualizar(usuario);
 
-     }
+    //  }
 
 }

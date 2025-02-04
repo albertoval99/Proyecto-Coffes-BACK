@@ -50,18 +50,18 @@ export default class UsuarioRepositoryPostgres implements UsuarioRepository {
         }
     }
 
-    async actualizar(usuario: Usuario): Promise<Usuario> {
-        const query="UPDATE usuarios SET alias=$1,password=$2,fechanacimiento=$3,email=$4 WHERE alias=$5 returning *";
-        const values=[usuario.alias,usuario.password,usuario.fechaNacimiento,usuario.email,usuario.alias];
-        const result= await executeQuery(query,values);
+    // async actualizar(usuario: Usuario): Promise<Usuario> {
+    //     const query="UPDATE usuarios SET alias=$1,password=$2,fechanacimiento=$3,email=$4 WHERE alias=$5 returning *";
+    //     const values=[usuario.alias,usuario.password,usuario.fechaNacimiento,usuario.email,usuario.alias];
+    //     const result= await executeQuery(query,values);
 
-        if (result.length === 0) throw new Error("Usuario no encontrado")
+    //     if (result.length === 0) throw new Error("Usuario no encontrado")
     
-        return {
-            alias: result[0].alias,
-            password: result[0].password,
-            fechaNacimiento: result[0].fechanacimiento,
-            email: result[0].email
-        };
-    }
+    //     return {
+    //         alias: result[0].alias,
+    //         password: result[0].password,
+    //         fechaNacimiento: result[0].fechanacimiento,
+    //         email: result[0].email
+    //     };
+    // }
 }
