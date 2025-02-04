@@ -2,7 +2,7 @@ CREATE TABLE usuarios (
     alias VARCHAR(50) PRIMARY KEY,
     password VARCHAR(255) NOT NULL,
     fechaNacimiento DATE NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL
 );
 
 CREATE TABLE tiendas (
