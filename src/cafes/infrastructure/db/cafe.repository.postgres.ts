@@ -22,4 +22,8 @@ export default class CafeRepositoryPostgres implements CafeRepository{
         };
     }
 
+    // async filter(nombre: string, tueste: string, precio: number, origen: string, peso: number, nombreTienda: string, pagina: number): Promise<Cafe[]> {
+        
+    // }
+
 }
