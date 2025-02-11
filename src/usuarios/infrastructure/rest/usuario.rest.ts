@@ -48,6 +48,7 @@ router.post("/login", async (req: Request, res: Response) => {
 router.patch("/actualizar",isAuth,isUser, async (req: Request, res: Response) => {
 
   try {
+    const alias = req.body.user.alias;
     const{email,nombre,fechaNacimiento,apellidos,imagen}=req.body;
     const usuario=await usuarioUseCases.actualizar({email,nombre,fechaNacimiento,apellidos,imagen});
     res.status(201).json({

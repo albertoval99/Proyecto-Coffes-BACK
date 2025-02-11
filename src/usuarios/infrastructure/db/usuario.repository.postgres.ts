@@ -12,8 +12,8 @@ export default class UsuarioRepositoryPostgres implements UsuarioRepository {
         const rows = await executeQuery(query, values);
 
         return {
-            nombre:rows[0].nombre,
-            apellidos:rows[0].apellidos,
+            nombre: rows[0].nombre,
+            apellidos: rows[0].apellidos,
             alias: rows[0].alias,
             password: rows[0].password,
             fechaNacimiento: rows[0].fechanacimiento,
@@ -29,8 +29,8 @@ export default class UsuarioRepositoryPostgres implements UsuarioRepository {
         const result = await executeQuery(query, values);
 
         return {
-            nombre:result.rows[0].nombre,
-            apellidos:result.rows[0].apellidos,
+            nombre: result.rows[0].nombre,
+            apellidos: result.rows[0].apellidos,
             alias: result.rows[0].alias,
             password: result.rows[0].password,
             fechaNacimiento: result.rows[0].fechanacimiento,
@@ -46,10 +46,10 @@ export default class UsuarioRepositoryPostgres implements UsuarioRepository {
 
         const result = await executeQuery(query, values);
         if (result.length === 0) throw new Error("Usuario no encontrado");
-        
+
         return {
-            nombre:result[0].nombre,
-            apellidos:result[0].apellidos,
+            nombre: result[0].nombre,
+            apellidos: result[0].apellidos,
             alias: result[0].alias,
             password: result[0].password,
             fechaNacimiento: result[0].fechanacimiento,
@@ -60,21 +60,22 @@ export default class UsuarioRepositoryPostgres implements UsuarioRepository {
     }
 
     async actualizar(usuario: Usuario): Promise<Usuario> {
-        const query="UPDATE usuarios SET email=$1,nombre=$2,fechanacimiento=$3,apellidos=$4,imagen=$5 WHERE alias=$6 returning *";
-        const values=[usuario.email,usuario.nombre,usuario.fechaNacimiento,usuario.apellidos,usuario.imagen,usuario.alias];
-        console.log(usuario.alias,usuario.email);
-        const result= await executeQuery(query,values);
-      
-    
+        const query = "UPDATE usuarios SET email=$1,nombre=$2,fechanacimiento=$3,apellidos=$4,imagen=$5 WHERE alias=$6 returning *";
+        const values = [usuario.email, usuario.nombre, usuario.fechaNacimiento, usuario.apellidos, usuario.imagen, usuario.alias];
+        console.log("Actualizando usuario con alias:", usuario.alias);
+        const result = await executeQuery(query, values);
+
+
         if (result.length === 0) throw new Error("Usuario no encontrado")
 
         return {
+            alias: usuario.alias,
             email: result[0].email,
             nombre: result[0].nombre,
             fechaNacimiento: result[0].fechanacimiento,
             apellidos: result[0].apellidos,
-            imagen:result[0].imagen
-            
+            imagen: result[0].imagen
+
         };
     }
 }
