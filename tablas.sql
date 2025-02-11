@@ -1,8 +1,11 @@
 CREATE TABLE usuarios (
+    nombre VARCHAR(50) NOT NULL,
+    apellidos VARCHAR(80) NOT NULL,
     alias VARCHAR(50) PRIMARY KEY,
     password VARCHAR(255) NOT NULL,
     fechaNacimiento DATE NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL
+    email VARCHAR(100) UNIQUE NOT NULL,
+    imagen VARCHAR(255) 
 );
 
 CREATE TABLE tiendas (
@@ -20,6 +23,7 @@ CREATE TABLE administradores (
     alias VARCHAR(50) PRIMARY KEY,
     password VARCHAR(255) NOT NULL,
     nombreTienda VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
     FOREIGN KEY (nombreTienda) REFERENCES tiendas(nombre)
 );
 

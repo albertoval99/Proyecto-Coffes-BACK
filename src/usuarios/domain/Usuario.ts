@@ -1,7 +1,10 @@
 export default interface Usuario{
-    alias:string;
-    password:string;
+    nombre?:string;
+    apellidos?:string;
+    alias?:string;
+    password?:string;
     fechaNacimiento?:Date;
-    email?:string;
+    email:string;
+    imagen?:string;
     
 }

@@ -14,9 +14,9 @@ export default class UsuarioUseCases {
         if (!usuario.alias) throw new Error("Falta alias");
         if (!usuario.password) throw new Error("Falta password");
 
-        const checkAliasQuery = 'SELECT * FROM usuarios WHERE alias = $1';
-        const checkAliasResult = await executeQuery(checkAliasQuery, [usuario.alias]);
-        if (checkAliasResult.length > 0) throw new Error('El alias ya está en uso.');
+        const comprobarAlias = 'SELECT * FROM usuarios WHERE alias = $1';
+        const result = await executeQuery(comprobarAlias, [usuario.alias]);
+        if (result.length > 0) throw new Error('El alias ya existe');
 
         const cifrada = hash(usuario.password);
         usuario.password = cifrada;
@@ -24,7 +24,7 @@ export default class UsuarioUseCases {
     }
 
     async login(usuario: Usuario): Promise<Usuario> {
-        if(!usuario.alias) throw new Error("Falta alias");
+        if(!usuario.email) throw new Error("Falta email");
         if(!usuario.password) throw new Error("Falta password");
 
         const userDB= await this.usuarioRepository.login(usuario);
@@ -44,9 +44,9 @@ export default class UsuarioUseCases {
         return user;
     }
 
-    //  async actualizar(usuario: Usuario): Promise<Usuario> {
-    //     const user= await this.usuarioRepository.actualizar(usuario);
+     async actualizar(usuario: Usuario): Promise<Usuario> {
+        return await this.usuarioRepository.actualizar(usuario);
 
-    //  }
+     }
 
 }
