@@ -21,7 +21,6 @@ export default class UsuarioRepositoryPostgres implements UsuarioRepository {
             imagen: rows[0].imagen
         };
     }
-
     async getUserByAlias(alias: string): Promise<Usuario> {
         const query = 'SELECT * FROM usuarios WHERE alias = $1';
         const values = [alias];
@@ -36,8 +35,7 @@ export default class UsuarioRepositoryPostgres implements UsuarioRepository {
             fechaNacimiento: result.rows[0].fechanacimiento,
             email: result.rows[0].email,
             imagen: result.rows[0].imagen
-
-        }
+        };
     }
 
     async login(usuario: Usuario): Promise<Usuario> {
@@ -55,27 +53,75 @@ export default class UsuarioRepositoryPostgres implements UsuarioRepository {
             fechaNacimiento: result[0].fechanacimiento,
             email: result[0].email,
             imagen: result[0].imagen
-
         }
     }
 
     async actualizar(usuario: Usuario): Promise<Usuario> {
-        const query = "UPDATE usuarios SET email=$1,nombre=$2,fechanacimiento=$3,apellidos=$4,imagen=$5 WHERE alias=$6 returning *";
-        const values = [usuario.email, usuario.nombre, usuario.fechaNacimiento, usuario.apellidos, usuario.imagen, usuario.alias];
-        console.log("Actualizando usuario con alias:", usuario.alias);
+        let query = "UPDATE usuarios SET ";
+        let indiceValor = 1;
+        let camposActualizados = false;
+        const values = [];
+
+        if (usuario.nombre !== "") {
+            query += `nombre = $${indiceValor}`;
+            values.push(usuario.nombre)
+            indiceValor++;
+            camposActualizados = true;
+            if (usuario.email || usuario.fechaNacimiento || usuario.imagen) {
+                query += ", ";
+            }
+        }
+
+        if (usuario.email !== "") {
+            query += `email = $${indiceValor}`;
+            values.push(usuario.email)
+            indiceValor++;
+            camposActualizados = true;
+            if (usuario.fechaNacimiento || usuario.imagen) {
+                query += ", ";
+            }
+        }
+
+        if (usuario.fechaNacimiento !== undefined) {
+            query += `fechanacimiento = $${indiceValor}`;
+            values.push(usuario.fechaNacimiento)
+            indiceValor++;
+            camposActualizados = true;
+            if (usuario.imagen) {
+                query += ", ";
+            }
+        }
+
+        if (usuario.imagen !== undefined) {
+            query += `imagen = $${indiceValor}`;
+            values.push(usuario.imagen)
+            indiceValor++;
+            camposActualizados = true;
+        }
+
+        if (!camposActualizados) {
+            throw new Error('No hay campos para actualizar');
+        }
+
+        query += ` WHERE alias = $${indiceValor}`;
+        values.push(usuario.alias);
+
+        query += " RETURNING *";
+
         const result = await executeQuery(query, values);
 
-
-        if (result.length === 0) throw new Error("Usuario no encontrado")
-
         return {
-            alias: usuario.alias,
+            alias: result[0].alias,
             email: result[0].email,
             nombre: result[0].nombre,
             fechaNacimiento: result[0].fechanacimiento,
             apellidos: result[0].apellidos,
             imagen: result[0].imagen
-
         };
     }
+
+
+
+
+
 }

@@ -40,12 +40,21 @@ export default class UsuarioUseCases {
 
     async getUserByAlias(alias: string): Promise<Usuario> {
         const user = await this.usuarioRepository.getUserByAlias(alias);
-        if (!user) throw new Error("Usuario no encontrado");
+        if (!user) {
+            console.log(`No se encontró el usuario con alias: ${alias}`);
+            throw new Error("Usuario no encontrado");
+        }
+        console.log("Usuario encontrado:", user);
         return user;
     }
+    
 
      async actualizar(usuario: Usuario): Promise<Usuario> {
-        return await this.usuarioRepository.actualizar(usuario);
+        const usuarioActualizado = await this.usuarioRepository.actualizar(usuario);
+        if (!usuarioActualizado) {
+            throw new Error("Usuario no encontrado para actualizar");
+        }
+        return usuarioActualizado;
 
      }
 

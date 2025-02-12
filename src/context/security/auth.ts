@@ -40,7 +40,9 @@ const isAuth = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers["authorization"];
     const token: string | undefined = authHeader && authHeader.split(" ")[1];
     if (token) {
+      console.log("✅ Token recibido:", token);
       const decoded: any = jwt.verify(token, SECRET_KEY);
+      console.log("✅ Token decodificado:", decoded);
       req.body.user = decoded.user;
       req.body.admin = decoded.admin;
       next();
@@ -75,17 +77,21 @@ const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
 const isUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = req.body.user;
+    console.log("👤 Usuario recibido en isUser:", user);
     if (user) {
       const comprobarUser = await usuarioUseCases.getUserByAlias(user.alias);
+      console.log("👤 Verificando si el usuario existe:", comprobarUser);
       if (!comprobarUser) {
+        console.log("❌ Usuario no encontrado");
         throw new Error("No se ha encontrado ese usuario");
       }
       next();
     } else {
+      console.log("❌ No hay usuario en el body");
       res.status(401).json({ "mensaje": "No autorizado" });
     }
   } catch (err) {
-    console.error(err);
+    console.error("❌ Error en isUser:", err);
     const message: Message = { text: String(err) };
     res.status(401).json(message);
   }
