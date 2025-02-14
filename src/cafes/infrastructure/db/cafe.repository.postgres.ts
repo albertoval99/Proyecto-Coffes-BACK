@@ -30,7 +30,7 @@ export default class CafeRepositoryPostgres implements CafeRepository {
         origen: string | null = null,
         nombreTienda: string | null = null,
         pagina: number = 1,
-        limite: number = 30,
+        limite: number = 15,
         ordenPrecio: 'asc' | 'desc' = 'asc'
     ): Promise<Cafe[]> {
 

@@ -45,7 +45,7 @@ router.get("/filtroCafes", async (req: Request, res: Response) => {
             origen = null,
             nombretienda = null, //SE TIENE QUE LLAMAR IGUAL Q EN LA BBDD
             pagina = 1,
-            limite = 30,
+            limite = 15,
             ordenPrecio = "asc",
         } = req.query;
 
