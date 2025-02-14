@@ -28,65 +28,85 @@ export default class CafeRepositoryPostgres implements CafeRepository {
         precioMin: number | null = null,
         precioMax: number | null = null,
         origen: string | null = null,
-        peso: number | null = null,
         nombreTienda: string | null = null,
         pagina: number = 1,
         limite: number = 30,
         ordenPrecio: 'asc' | 'desc' = 'asc'
     ): Promise<Cafe[]> {
+
+        
         const cafesPorPagina = limite;
         const saltoPaginas = (pagina - 1) * cafesPorPagina;
 
         let query = "SELECT * FROM cafes";
-        const values: any[] = [];
-        let condiciones: string[] = [];
+        const values = [];
         let indiceValue = 1;
+        let tieneCondiciones = false;
 
         if (nombre !== null) {
-            condiciones.push(`nombre ILIKE $${indiceValue}`);
-            values.push(`%${nombre}%`);
+            query += ` WHERE nombre ILIKE '%' || $${indiceValue} || '%'`;
+            values.push(nombre);
+            indiceValue++;
+            tieneCondiciones = true;
+        }
+
+        if (origen !== null) {
+            if (tieneCondiciones) {
+                query += ` AND origen ILIKE '%' || $${indiceValue} || '%'`;
+            } else {
+                query += ` WHERE origen ILIKE '%' || $${indiceValue} || '%'`;
+                tieneCondiciones = true;
+            }
+            values.push(origen);
             indiceValue++;
         }
-        if (origen !== null) {
-            condiciones.push(`origen ILIKE $${indiceValue}`);
-            values.push(`%${origen}%`);
+
+
+        if (tueste !== null) {
+            if (tieneCondiciones) {
+                query += ` AND tueste ILIKE '%' || $${indiceValue} || '%'`;
+            } else {
+                query += ` WHERE tueste ILIKE '%' || $${indiceValue} || '%'`;
+                tieneCondiciones = true;
+            }
+            values.push(tueste);
+            indiceValue++;
+        }
+
+
+        if (nombreTienda !== null) {
+            if (tieneCondiciones) {
+                query += ` AND nombretienda ILIKE '%' || $${indiceValue} || '%'`;
+            } else {
+                query += ` WHERE nombretienda ILIKE '%' || $${indiceValue} || '%'`;
+                tieneCondiciones = true;
+            }
+            values.push(nombreTienda);
             indiceValue++;
         }
 
         if (precioMin !== null) {
-            condiciones.push(`precio >= $${indiceValue}`);
+            if (tieneCondiciones) {
+                query += ` AND precio >= $${indiceValue}`;
+            } else {
+                query += ` WHERE precio >= $${indiceValue}`;
+                tieneCondiciones = true;
+            }
             values.push(precioMin);
             indiceValue++;
         }
 
         if (precioMax !== null) {
-            condiciones.push(`precio <= $${indiceValue}`);
+            if (tieneCondiciones) {
+                query += ` AND precio <= $${indiceValue}`;
+            } else {
+                query += ` WHERE precio <= $${indiceValue}`;
+                tieneCondiciones = true;
+            }
             values.push(precioMax);
             indiceValue++;
         }
 
-        if (tueste !== null) {
-            condiciones.push(`tueste ILIKE $${indiceValue}`);
-            values.push(`%${tueste}%`);
-            indiceValue++;
-        }
-
-        if (nombreTienda !== null) {
-            condiciones.push(`nombre_tienda ILIKE $${indiceValue}`);
-            values.push(`%${nombreTienda}%`);
-            indiceValue++;
-        }
-
-        if (peso !== null) {
-            condiciones.push(`peso = $${indiceValue}`);
-            values.push(peso);
-            indiceValue++;
-        }
-
-
-        if (condiciones.length > 0) {
-            query += " WHERE " + condiciones.join(" AND ");
-        }
 
         //Para ordenar asc o desc
         query += ` ORDER BY precio ${ordenPrecio}`;
@@ -95,7 +115,21 @@ export default class CafeRepositoryPostgres implements CafeRepository {
         query += ` LIMIT $${indiceValue} OFFSET $${indiceValue + 1}`;
         values.push(cafesPorPagina, saltoPaginas);
 
-
+        /** 
+        console.log("Consulta SQL:", query);
+        console.log("Valores:", values);
+        console.log('Parámetros recibidos en el Repository:', {
+            nombre,
+            tueste,
+            precioMin,
+            precioMax,
+            origen,
+            nombreTienda,
+            pagina,
+            limite,
+            ordenPrecio
+          });*/
+          
         const cafes = await executeQuery(query, values);
         return cafes;
     }

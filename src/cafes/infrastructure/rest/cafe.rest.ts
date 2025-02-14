@@ -36,14 +36,14 @@ router.post("/crear", isAuth, isAdmin, async (req: Request, res: Response) => {
 // GET http://localhost:3000/api/cafes/filtroCafes
 router.get("/filtroCafes", async (req: Request, res: Response) => {
     try {
+        //TIENEN QUE ESTAR EN EL ORDEN DEL REPOSITORY!!!!!!!
         const {
             nombre = null,
-            origen = null,
+            tueste = null,
             precioMin = null,
             precioMax = null,
-            tueste = null,
-            peso = null,
-            nombreTienda = null,
+            origen = null,
+            nombretienda = null, //SE TIENE QUE LLAMAR IGUAL Q EN LA BBDD
             pagina = 1,
             limite = 30,
             ordenPrecio = "asc",
@@ -53,27 +53,37 @@ router.get("/filtroCafes", async (req: Request, res: Response) => {
         const comprobarNombre = typeof nombre === 'string' ? nombre : null;
         const comprobarOrigen  = typeof origen === 'string' ? origen : null;
         const comprobarTueste = typeof tueste === 'string' ? tueste : null;
-        const comprobarTienda = typeof nombreTienda === 'string' ? nombreTienda : null;
+        const comprobarTienda = typeof nombretienda === 'string' ? nombretienda : null;
 
         const precioMinValue = precioMin ? parseInt(precioMin as string, 10) : null;
         const precioMaxValue = precioMax ? parseInt(precioMax as string, 10) : null;
-        const pesoValue = peso ? parseInt(peso as string, 10) : null;
+        
         
         const cafes = await cafeUseCases.filter(
             comprobarNombre,
-            comprobarOrigen,
+            comprobarTueste,
             precioMinValue,
             precioMaxValue,
-            comprobarTueste,
-            pesoValue,
+            comprobarOrigen,
             comprobarTienda,
             Number(pagina),  
             Number(limite),  
             ordenPrecio as "asc" | "desc" 
         );
 
+        /** 
+        console.log('Parámetros recibidos en rest:', {
+            nombre,
+            origen,
+            tueste,
+            nombretienda,
+            precioMinValue,
+            precioMaxValue,
+          });
+          console.log('Parámetros recibidos en el REST:', req.query);*/
+
         res.status(201).json(cafes);
-        console.log("Cafes filtrados")
+        //console.log("Cafes filtrados")
 
     } catch (error) {
         console.error("Error filtrando cafés:", error);

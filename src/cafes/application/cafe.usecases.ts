@@ -14,11 +14,8 @@ export default class CafeUseCases {
         return this.cafeRepository.crearCafe(cafe);
     }
 
-    async filter(nombre: string | null, tueste: string | null, precioMin: number | null, precioMax: number | null, origen: string | null, peso: number | null, nombreTienda: string | null, pagina: number, limite: number, ordenPrecio: 'asc' | 'desc'): Promise<Cafe[]> {
-        if (pagina < 1) {
-            throw new Error('La página debe ser mayor o igual a 1');
-        }
-
+    async filter(nombre: string | null, tueste: string | null, precioMin: number | null, precioMax: number | null, origen: string | null, nombreTienda: string | null, pagina: number, limite: number, ordenPrecio: 'asc' | 'desc'): Promise<Cafe[]> {
+        
         if (ordenPrecio !== 'asc' && ordenPrecio !== 'desc') {
             throw new Error('El valor de ordenPrecio debe ser "asc" o "desc"');
         }
@@ -27,7 +24,7 @@ export default class CafeUseCases {
             throw new Error('El precio mínimo no puede ser mayor que el precio máximo');
         }
 
-        return this.cafeRepository.filter(nombre, tueste, precioMin, precioMax, origen, peso, nombreTienda, pagina, limite, ordenPrecio);
+        return this.cafeRepository.filter(nombre, tueste, precioMin, precioMax, origen, nombreTienda, pagina, limite, ordenPrecio);
     }
 
 }
