@@ -14,8 +14,8 @@ router.post("/addCafeAlCarrito", isAuth, isUser, async (req: Request, res: Respo
         const { nombrecafe, tuestecafe, origencafe, pesocafe, nombretienda } = req.body;
         const alias = req.body.user;
         const aliasValue = alias.alias;//Para que no llegue como objeto user
-        const response = await carritoUseCases.addCafeAlCarrito(nombrecafe, tuestecafe, origencafe, pesocafe, nombretienda, aliasValue);
-        res.status(201).json({ message: `El cafe ha sido añadido al carrito.` });
+        await carritoUseCases.addCafeAlCarrito(nombrecafe, tuestecafe, origencafe, pesocafe, nombretienda, aliasValue);
+        res.status(201).json({ message: `El cafe se ha añadido al carrito.` });
 
     } catch (error) {
         const message = { text: `Error añadiendo al carrito: ${error.message || error}` };
