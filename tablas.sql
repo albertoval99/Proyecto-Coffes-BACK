@@ -41,6 +41,15 @@ CREATE TABLE cafes (
     FOREIGN KEY (nombreTienda) REFERENCES tiendas(nombre) 
 );
 
+ALTER TABLE cafes DROP CONSTRAINT cafes_pkey;
+ALTER TABLE cafes ADD PRIMARY KEY (nombre, tueste, peso, origen, nombreTienda);
+
+
+
+
+
+
+
 
 CREATE TABLE valoraciones (
     nombreCafe VARCHAR(100),
@@ -50,18 +59,14 @@ CREATE TABLE valoraciones (
     nombreTienda VARCHAR(100),
     aliasUsuario VARCHAR(50),
     valoracion INT CHECK (valoracion BETWEEN 0 AND 5),
-    PRIMARY KEY (nombreCafe, tuesteCafe, pesoCafe,origenCafe, aliasUsuario,nombreTienda), -- Para q un usuario no pueda valorar el mismo cafe dos veces
+    PRIMARY KEY (nombreCafe, tuesteCafe, pesoCafe,origenCafe, aliasUsuario,nombreTienda), 
     FOREIGN KEY (nombreCafe, tuesteCafe,pesoCafe,origenCafe,nombreTienda) REFERENCES cafes(nombre, tueste,peso,origen,nombreTienda) ON UPDATE CASCADE,
     FOREIGN KEY (aliasUsuario) REFERENCES usuarios(alias)
 );
 
 
-CREATE TABLE carritos (
-    aliasUsuario VARCHAR(50) PRIMARY KEY,
-    FOREIGN KEY (aliasUsuario) REFERENCES usuarios(alias) 
-);
 
-CREATE TABLE cantidades_cafes_carritos (
+CREATE TABLE carritos (
     nombreCafe VARCHAR(100),
     tuesteCafe VARCHAR(100),
     origenCafe VARCHAR(100),
@@ -69,7 +74,7 @@ CREATE TABLE cantidades_cafes_carritos (
     nombreTienda VARCHAR(100),
     aliasUsuario VARCHAR(50),
     cantidad INT NOT NULL CHECK (cantidad > 0),
-    PRIMARY KEY (nombreCafe, tuesteCafe, aliasUsuario, pesoCafe,origenCafe,nombreTienda), -- Evita q puedas añadir 2 cafes iguales y salgan como dos diferentes
+    PRIMARY KEY (nombreCafe, tuesteCafe, aliasUsuario, pesoCafe,origenCafe,nombreTienda),
     FOREIGN KEY (nombreCafe, tuesteCafe,pesoCafe,origenCafe,nombreTienda) REFERENCES cafes(nombre, tueste,peso,origen,nombreTienda)ON UPDATE CASCADE,
     FOREIGN KEY (aliasUsuario) REFERENCES usuarios(alias)
 );
