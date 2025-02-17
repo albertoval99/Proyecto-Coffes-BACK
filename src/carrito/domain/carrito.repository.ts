@@ -3,6 +3,6 @@ import Usuario from "../../usuarios/domain/Usuario";
 
 
 export default interface CarritoRepository{
-    isCafeEnCarrito(nombre:string,tueste:string,origen:string,peso:number,nombretienda:string):Promise<Cafe>;
-    addCafeAlCarrito(nombre:string,tueste:string,origen:string,peso:number,nombretienda:string,alias:string):Promise<Cafe[]>;
+    isCafeEnCarrito(nombrecafe:string,tuestecafe:string,origencafe:string,pesocafe:number,nombretienda:string):Promise<boolean>;
+    addCafeAlCarrito(nombrecafe:string,tuestecafe:string,origencafe:string,pesocafe:number,nombretienda:string,aliasusuario:string):Promise<Cafe[]>;
 }

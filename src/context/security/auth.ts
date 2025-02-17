@@ -77,7 +77,6 @@ const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
 const isUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = req.body.user;
-    console.log("👤 Usuario recibido en isUser:", user);
     if (user) {
       const comprobarUser = await usuarioUseCases.getUserByAlias(user.alias);
       console.log("👤 Verificando si el usuario existe:", comprobarUser);

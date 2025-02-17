@@ -2,16 +2,20 @@ import Cafe from "../../cafes/domain/Cafe";
 import Usuario from "../../usuarios/domain/Usuario";
 import CarritoRepository from "../domain/carrito.repository";
 
-export default class CarritoUseCases{
-    private carritoRepository:CarritoRepository;
+export default class CarritoUseCases {
+    private carritoRepository: CarritoRepository;
 
-    constructor(carritoRepository:CarritoRepository){
-        this.carritoRepository=carritoRepository;
+    constructor(carritoRepository: CarritoRepository) {
+        this.carritoRepository = carritoRepository;
     }
 
-    async addCafeAlCarrito(cafe: Cafe, usuario: Usuario, cantidadCafe: number) {
-        if(cantidadCafe<=0) throw new Error("La cantidad tiene que ser mayor que 0")
-        if(!cafe) throw new Error("Falta cafe")
-        if(!usuario) throw new Error("Falta usuario")        
+    async addCafeAlCarrito(nombrecafe: string, tuestecafe: string, origencafe: string, pesocafe: number, nombretienda: string, aliasusuario: string): Promise<Cafe[]> {
+
+        if (nombrecafe == "" || tuestecafe == "" || origencafe == "" || pesocafe == undefined || nombretienda == "") {
+            throw new Error("Faltan datos del cafe");
+        }
+        return await this.carritoRepository.addCafeAlCarrito(nombrecafe, tuestecafe, origencafe, pesocafe, nombretienda, aliasusuario);
+
+        
     }
 }

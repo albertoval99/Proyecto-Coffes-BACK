@@ -2,6 +2,7 @@ import express from "express";
 import usuarioRouter from "./usuarios/infrastructure/rest/usuario.rest";
 import administradorRouter from "./administradores/infrastructure/rest/administrador.rest";
 import cafeRouter from "./cafes/infrastructure/rest/cafe.rest";
+import carritoRouter from "./carrito/infrastructure/rest/carrito.rest";
 
 const app = express();
 const swaggerUi = require("swagger-ui-express");
@@ -24,6 +25,7 @@ const api = "/api";
 app.use(`${api}/usuarios`, usuarioRouter);
 app.use(`${api}/administradores`, administradorRouter);
 app.use(`${api}/cafes`, cafeRouter);
+app.use(`${api}/carrito`,carritoRouter);
 
 
 export default app;

@@ -28,13 +28,13 @@ export default class UsuarioRepositoryPostgres implements UsuarioRepository {
         const result = await executeQuery(query, values);
 
         return {
-            nombre: result.rows[0].nombre,
-            apellidos: result.rows[0].apellidos,
-            alias: result.rows[0].alias,
-            password: result.rows[0].password,
-            fechaNacimiento: result.rows[0].fechanacimiento,
-            email: result.rows[0].email,
-            imagen: result.rows[0].imagen
+            nombre: result[0].nombre,
+            apellidos: result[0].apellidos,
+            alias: result[0].alias,
+            password: result[0].password,
+            fechaNacimiento: result[0].fechanacimiento,
+            email: result[0].email,
+            imagen: result[0].imagen
         };
     }
 

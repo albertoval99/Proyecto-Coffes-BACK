@@ -1,7 +1,7 @@
 export default interface Cafe{
     nombre:string;
     tueste:string;
-    precio:number;
+    precio?:number;
     origen:string;
     peso:number;
     nombreTienda:string;
