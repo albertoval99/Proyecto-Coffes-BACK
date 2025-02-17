@@ -1,5 +1,6 @@
 export default interface Administrador{
-    alias: string;
-    password: string;
+    alias?: string;
+    password?: string;
     nombreTienda?: string;
+    email:string;
 }

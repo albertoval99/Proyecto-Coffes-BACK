@@ -5,6 +5,5 @@ export default interface UsuarioRepository {
     login(usuario: Usuario): Promise<Usuario>;
     getUserByAlias(alias:string):Promise<Usuario>;
     actualizar(usuario:Usuario):Promise<Usuario>;
-    // addCafeAlCarrito(cafePedido: CafePedido, idUsuario: string): Promise<Usuario>;
-    //borrarCafeDelPedido(idCafe:string, cantidad:number): Promise<Usuario>;
+    
 }

@@ -10,7 +10,7 @@ export default class AdministradorUseCases{
     }
 
     async login(admin: Administrador): Promise<Administrador> {
-        if (!admin.alias) throw new Error("Falta alias"); 
+        if (!admin.email) throw new Error("Falta email"); 
         if (!admin.password) throw new Error("Falta password"); 
     
         const adminDB = await this.adminRepository.login(admin);
@@ -29,4 +29,12 @@ export default class AdministradorUseCases{
         if(!admin)throw new Error("Administrador no encontrado");
         return admin;
      }
+
+      async actualizar(administrador: Administrador): Promise<Administrador> {
+        const adminActualizado=await this.adminRepository.actualizar(administrador);
+        if(!adminActualizado){
+          throw new Error("Admin no encontrado para actualizar")
+        }
+        return adminActualizado;
+      }
 }

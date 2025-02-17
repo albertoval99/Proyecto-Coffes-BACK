@@ -10,15 +10,41 @@ const adminUseCases = new AdministradorUseCases(new AdministradorRepositoryPostg
 // POST http://localhost:3000/api/administradores/login
 router.post("/login", async (req: Request, res: Response) => {
     try {
-        const { alias, password } = req.body;
-        const admin = await adminUseCases.login({ alias, password });
+        const { email, password } = req.body;
+        const admin = await adminUseCases.login({ email, password });
         const token = createTokenAdmin(admin);
-        res.status(201).json({token});
+        res.status(201).json({
+            admin: {
+                alias:admin.alias,
+                nombreTienda:admin.nombreTienda,
+                email:admin.email
+              },
+              token
+        });
 
     } catch (error) {
         const message: Message = { text: `Error logueando admin: ${error}` };
         res.status(500).json(message);
     }
+});
+
+// PATCH http://localhost:3000/api/administradores/actualizar
+router.patch("/actualizar", async (req: Request, res: Response) => {
+  try {
+    
+    const { alias,nombreTienda,email } = req.body;
+    
+    const admin = await adminUseCases.actualizar({
+      alias,
+      nombreTienda,
+      email,
+    });
+
+    res.status(201).json({ admin });
+  } catch (error) {
+    console.error("Error en la actualización:", error);
+    res.status(500).json({ mensaje: `Error actualizando admin: ${error.message}` });
+  }
 });
 
 export default router;
