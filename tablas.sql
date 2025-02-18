@@ -45,12 +45,6 @@ ALTER TABLE cafes DROP CONSTRAINT cafes_pkey;
 ALTER TABLE cafes ADD PRIMARY KEY (nombre, tueste, peso, origen, nombreTienda);
 
 
-
-
-
-
-
-
 CREATE TABLE valoraciones (
     nombreCafe VARCHAR(100),
     tuesteCafe VARCHAR(100),
