@@ -33,8 +33,8 @@ router.post("/login", async (req: Request, res: Response) => {
         apellidos: usuario.apellidos,
         email: usuario.email,
         imagen: usuario.imagen,
-        alias:usuario.alias,
-        fechanacimiento:usuario.fechaNacimiento,
+        alias: usuario.alias,
+        fechanacimiento: usuario.fechaNacimiento,
       },
       token
     });
@@ -49,8 +49,8 @@ router.post("/login", async (req: Request, res: Response) => {
 // PATCH http://localhost:3000/api/usuarios/actualizar
 router.patch("/actualizar", async (req: Request, res: Response) => {
   try {
+    const { alias, email, nombre, fechaNacimiento, apellidos, imagen } = req.body;
     
-    const { alias,email, nombre, fechaNacimiento, apellidos, imagen } = req.body;
     
     const usuario = await usuarioUseCases.actualizar({
       alias,
@@ -67,6 +67,7 @@ router.patch("/actualizar", async (req: Request, res: Response) => {
     res.status(500).json({ mensaje: `Error actualizando usuario: ${error.message}` });
   }
 });
+
 
 
 

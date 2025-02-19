@@ -83,14 +83,15 @@ export default class UsuarioRepositoryPostgres implements UsuarioRepository {
         }
 
         if (usuario.fechaNacimiento !== undefined) {
+            const fechaNacimiento = new Date(usuario.fechaNacimiento).toISOString().split('T')[0];
             query += `fechanacimiento = $${indiceValor}`;
-            values.push(usuario.fechaNacimiento)
+            values.push(fechaNacimiento);
             indiceValor++;
             camposActualizados = true;
             if (usuario.imagen) {
-                query += ", ";
+              query += ", ";
             }
-        }
+          }
 
         if (usuario.imagen !== undefined) {
             query += `imagen = $${indiceValor}`;
