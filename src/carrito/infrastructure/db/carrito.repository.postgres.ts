@@ -2,6 +2,7 @@ import Cafe from "../../../cafes/domain/Cafe";
 import Usuario from "../../../usuarios/domain/Usuario";
 import CarritoRepository from "../../domain/carrito.repository";
 import { executeQuery } from '../../../context/db/postgres.db';
+import Carrito from "../../domain/Carrito";
 
 
 export default class CarritoRepositoryPostgres implements CarritoRepository {
@@ -37,5 +38,19 @@ export default class CarritoRepositoryPostgres implements CarritoRepository {
             const values = [nombrecafe, tuestecafe, origencafe, pesocafe, nombretienda, aliasusuario]
             return await executeQuery(query, values);
         }
+    }
+
+    async getCarrito(aliasUsuario: string): Promise<Carrito> {
+        const query = "SELECT * FROM carritos WHERE aliasusuario = $1";
+        const values = [aliasUsuario]
+        const result = await executeQuery(query, values);
+        return result;
+    }
+
+    async borrarCafeCarrito(cafe: Cafe, aliasUsuario: string): Promise<Carrito> {
+        const query = "DELETE FROM carritos WHERE nombrecafe = $1 AND tuestecafe = $2 AND origencafe = $3 AND pesocafe = $4 AND nombretienda = $5 AND aliasusuario = $6";
+        const values=[cafe.nombre,cafe.tueste,cafe.origen,cafe.peso,cafe.nombreTienda,aliasUsuario];
+        const result = await executeQuery(query, values);
+        return result;
     }
 }

@@ -25,5 +25,39 @@ router.post("/addCafeAlCarrito", isAuth, isUser, async (req: Request, res: Respo
     }
 });
 
+
+// GET http://localhost:3000/api/carrito/getCarrito
+router.get("/getCarrito",isAuth,isUser,async (req: Request, res: Response)=>{
+    try {
+        const aliasusuario=req.body.user;
+        const aliasValue=aliasusuario.alias;
+        const carrito=await carritoUseCases.getCarrito(aliasValue);
+        res.status(201).json(carrito);
+
+    } catch (error) {
+        const message = { text: `Error sacando al carrito: ${error.message || error}` };
+        console.error(error);
+        res.status(500).json(message);  
+    }
+})
+
+// DELETE http://localhost:3000/api/carrito/eliminarCafeCarrito
+router.delete("/eliminarCafeCarrito",isAuth,isUser,async (req: Request, res: Response)=>{
+    try {
+
+        const cafe = req.body.cafe;
+        const aliasusuario=req.body.user;
+        const aliasValue=aliasusuario.alias;
+        const eliminarCarrito=await carritoUseCases.borrarCafeCarrito(cafe, aliasValue)
+        res.status(201).json(eliminarCarrito);
+        
+    } catch (error) {
+        const message = { text: `Error borrando cafe del carrito: ${error.message || error}` };
+        console.error(error);
+        res.status(500).json(message);  
+        
+    }
+})
+
 export default router;
 
