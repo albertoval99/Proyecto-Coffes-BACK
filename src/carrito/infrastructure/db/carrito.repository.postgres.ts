@@ -49,7 +49,21 @@ export default class CarritoRepositoryPostgres implements CarritoRepository {
 
     async borrarCafeCarrito(cafe: Cafe, aliasUsuario: string): Promise<Carrito> {
         const query = "DELETE FROM carritos WHERE nombrecafe = $1 AND tuestecafe = $2 AND origencafe = $3 AND pesocafe = $4 AND nombretienda = $5 AND aliasusuario = $6";
-        const values=[cafe.nombre,cafe.tueste,cafe.origen,cafe.peso,cafe.nombreTienda,aliasUsuario];
+        const values = [cafe.nombre, cafe.tueste, cafe.origen, cafe.peso, cafe.nombreTienda, aliasUsuario];
+        const result = await executeQuery(query, values);
+        return result;
+    }
+
+    async getPrecioTotal(aliasUsuario: string): Promise<Carrito> {
+        const query =
+            "SELECT carrito.*, cafe.precio, (carrito.cantidad * cafe.precio) as precio_total " +
+            "FROM carritos carrito " +
+            "JOIN cafes cafe ON carrito.nombrecafe = cafe.nombre " +
+            "AND carrito.tuestecafe = cafe.tueste " +
+            "AND carrito.origencafe = cafe.origen " +
+            "AND carrito.pesocafe = cafe.peso " +
+            "WHERE carrito.aliasusuario = $1";
+        const values = [aliasUsuario];
         const result = await executeQuery(query, values);
         return result;
     }

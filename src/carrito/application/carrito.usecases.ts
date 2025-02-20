@@ -15,12 +15,17 @@ export default class CarritoUseCases {
     }
 
     async getCarrito(aliasUsuario: string): Promise<Carrito> {
-        if(!aliasUsuario) throw new Error("Falta usuario");
+        if (!aliasUsuario) throw new Error("Falta usuario");
         return await this.carritoRepository.getCarrito(aliasUsuario);
     }
 
     async borrarCafeCarrito(cafe: Cafe, aliasUsuario: string): Promise<Carrito> {
-        if(!aliasUsuario)throw new Error("Falta usuario");
+        if (!aliasUsuario) throw new Error("Falta usuario");
         return await this.carritoRepository.borrarCafeCarrito(cafe, aliasUsuario)
+    }
+    
+    async getPrecioTotal(aliasUsuario: string): Promise<Carrito> {
+        if (!aliasUsuario) throw new Error("Falta usuario");
+        return await this.carritoRepository.getPrecioTotal(aliasUsuario);
     }
 }

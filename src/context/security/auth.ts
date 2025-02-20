@@ -40,9 +40,9 @@ const isAuth = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers["authorization"];
     const token: string | undefined = authHeader && authHeader.split(" ")[1];
     if (token) {
-      console.log("✅ Token recibido:", token);
+      //console.log("✅ Token recibido:", token);
       const decoded: any = jwt.verify(token, SECRET_KEY);
-      console.log("✅ Token decodificado:", decoded);
+     // console.log("✅ Token decodificado:", decoded);
       req.body.user = decoded.user;
       req.body.admin = decoded.admin;
       next();
@@ -79,7 +79,7 @@ const isUser = async (req: Request, res: Response, next: NextFunction) => {
     const user = req.body.user;
     if (user) {
       const comprobarUser = await usuarioUseCases.getUserByAlias(user.alias);
-      console.log("👤 Verificando si el usuario existe:", comprobarUser);
+      //console.log("👤 Verificando si el usuario existe:", comprobarUser);
       if (!comprobarUser) {
         console.log("❌ Usuario no encontrado");
         throw new Error("No se ha encontrado ese usuario");

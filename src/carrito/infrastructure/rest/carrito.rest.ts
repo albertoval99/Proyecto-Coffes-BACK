@@ -45,7 +45,8 @@ router.get("/getCarrito",isAuth,isUser,async (req: Request, res: Response)=>{
 router.delete("/eliminarCafeCarrito",isAuth,isUser,async (req: Request, res: Response)=>{
     try {
 
-        const cafe = req.body.cafe;
+        const {nombrecafe, tuestecafe, origencafe, pesocafe, nombretienda} = req.body;
+        const cafe = {nombre: nombrecafe, tueste: tuestecafe, origen: origencafe, peso: pesocafe, nombreTienda: nombretienda};
         const aliasusuario=req.body.user;
         const aliasValue=aliasusuario.alias;
         const eliminarCarrito=await carritoUseCases.borrarCafeCarrito(cafe, aliasValue)
@@ -58,6 +59,22 @@ router.delete("/eliminarCafeCarrito",isAuth,isUser,async (req: Request, res: Res
         
     }
 })
+
+// GET http://localhost:3000/api/carrito/getPrecioCarrito
+router.get("/getPrecioCarrito", isAuth, isUser, async (req: Request, res: Response) => {
+    try {
+        const aliasusuario = req.body.user;
+        const aliasValue = aliasusuario.alias;
+        const carrito = await carritoUseCases.getPrecioTotal(aliasValue);
+
+        res.status(201).json(carrito);
+
+    } catch (error) {
+        const message = { text: `Error sacando al carrito: ${error.message || error}` };
+        console.error(error);
+        res.status(500).json(message);
+    }
+});
 
 export default router;
 
