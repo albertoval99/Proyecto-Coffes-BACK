@@ -1,5 +1,5 @@
 export default interface Pedido{
-    id:string;
+    id:number;
     direccion:string;
     fechaPedido:Date;
     aliasusuario:string;

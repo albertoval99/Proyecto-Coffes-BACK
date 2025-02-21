@@ -1,3 +1,5 @@
+import Cafe from '../../cafes/domain/Cafe';
+import Carrito from '../../carrito/domain/Carrito';
 import Pedido from '../domain/Pedido';
 import PedidoRepository from '../domain/pedido.repository';
 
@@ -17,6 +19,12 @@ export default class PedidoUseCases {
         if (!cvv) throw new Error("Falta cvv");
         return await this.pedidoRepository.crearPedido(direccion, tarjeta, fechaCaducidad, cvv,aliasusuario);
     }
+     async insertarCafesenPedido(idPedido: number, carrito: Carrito[]): Promise<void> {
+        if (!idPedido) throw new Error("Falta idPedido");
+        if (!carrito) throw new Error("Falta carrito");
+
+        return await this.pedidoRepository.insertarCafesenPedido(idPedido, carrito);
+     }
     async vaciarCarrito(aliasusuario: string): Promise<void> {
         if (!aliasusuario) throw new Error("Falta usuario");
         return await this.pedidoRepository.vaciarCarrito(aliasusuario);
