@@ -72,15 +72,14 @@ CREATE TABLE carritos (
  */
 CREATE TABLE pedidos (
     id SERIAL PRIMARY KEY,
-    fecha DATE,
+    fecha DATE NOT NULL,
     direccion VARCHAR(200) NOT NULL,
-    tarejta VARCHAR(16) NOT NULL,
-    fechaCaducidad DATE NOT NULL,
+    tarjeta VARCHAR(16) NOT NULL,
+    fechacaducidad VARCHAR(5) NOT NULL,
     cvv INT NOT NULL,
     aliasUsuario VARCHAR(50),
     FOREIGN KEY (aliasUsuario) REFERENCES usuarios(alias)
 );
-
 
 CREATE TABLE cafes_pedidos (
     idPedido INT,
