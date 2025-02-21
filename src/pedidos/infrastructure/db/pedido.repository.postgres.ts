@@ -15,22 +15,10 @@ export default class PedidoRepositoryPostgres implements PedidoRepository {
         const result = await executeQuery(query, values);
         return result[0];
     }
-/** 
-    async insertarDetallesPedido(idPedido: number, carrito: Carrito[]): Promise<void> {
-        const query = `
-            INSERT INTO cafes_pedidos (idPedido, nombreCafe, tuesteCafe, origenCafe, pesoCafe, nombreTienda, cantidad, precio)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-        `;
-        
-        for (const i of carrito) {
-            const values = [idPedido, i.nombrecafe, i.tuestecafe, i.origencafe, i.pesocafe, i.nombretienda, i.cantidad, i.precio];
-            await executeQuery(query, values);
-        }
-    }
 
     async vaciarCarrito(aliasusuario: string): Promise<void> {
         const query = "DELETE FROM carritos WHERE aliasusuario = $1";
         const values = [aliasusuario];
         await executeQuery(query, values);
-    }*/
+    }
 }

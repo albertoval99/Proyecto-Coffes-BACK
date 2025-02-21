@@ -17,4 +17,8 @@ export default class PedidoUseCases {
         if (!cvv) throw new Error("Falta cvv");
         return await this.pedidoRepository.crearPedido(direccion, tarjeta, fechaCaducidad, cvv,aliasusuario);
     }
+    async vaciarCarrito(aliasusuario: string): Promise<void> {
+        if (!aliasusuario) throw new Error("Falta usuario");
+        return await this.pedidoRepository.vaciarCarrito(aliasusuario);
+    }
 }
