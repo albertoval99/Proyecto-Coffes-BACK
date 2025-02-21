@@ -12,12 +12,6 @@ CREATE TABLE tiendas (
     nombre VARCHAR(100) PRIMARY KEY
 );
 
-CREATE TABLE direcciones(
-    aliasUsuario VARCHAR(50) PRIMARY KEY,
-    direccion VARCHAR(200) UNIQUE,
-    FOREIGN KEY (aliasUsuario) REFERENCES usuarios(alias)
-);
-
 
 CREATE TABLE administradores (
     alias VARCHAR(50) PRIMARY KEY,
@@ -78,9 +72,11 @@ CREATE TABLE pedidos (
     id SERIAL PRIMARY KEY,
     fecha DATE,
     direccion VARCHAR(200) NOT NULL,
+    tarejta VARCHAR(16) NOT NULL,
+    fechaCaducidad DATE NOT NULL,
+    cvv INT NOT NULL,
     aliasUsuario VARCHAR(50),
-    FOREIGN KEY (aliasUsuario) REFERENCES usuarios(alias),
-    FOREIGN KEY (direccion) REFERENCES direcciones(direccion)
+    FOREIGN KEY (aliasUsuario) REFERENCES usuarios(alias)
 );
 
 
