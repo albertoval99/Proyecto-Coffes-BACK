@@ -28,7 +28,7 @@ export default class CarritoRepositoryPostgres implements CarritoRepository {
 
         const isCafeEnCarrito = await this.isCafeEnCarrito(nombrecafe, tuestecafe, origencafe, pesocafe, nombretienda);
         if (!isCafeEnCarrito) {
-            const query = "INSERT into carritos (nombrecafe,tuestecafe,origencafe,pesocafe,nombretienda,aliasusuario,cantidad) VALUES ($1,$2,$3,$4,$5,$6,$7) returning *";
+            const query = "INSERT into carritos (nombrecafe,tuestecafe,origencafe,pesocafe,nombretienda,aliasusuario,cantidad) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *";
             const values = [nombrecafe, tuestecafe, origencafe, pesocafe, nombretienda, aliasusuario, this.cantidad]
             console.log(query)
             return await executeQuery(query, values);
@@ -62,6 +62,7 @@ export default class CarritoRepositoryPostgres implements CarritoRepository {
             "AND carrito.tuestecafe = cafe.tueste " +
             "AND carrito.origencafe = cafe.origen " +
             "AND carrito.pesocafe = cafe.peso " +
+            "AND carrito.nombretienda = cafe.nombretienda "+
             "WHERE carrito.aliasusuario = $1";
         const values = [aliasUsuario];
         const result = await executeQuery(query, values);
