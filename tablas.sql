@@ -67,7 +67,9 @@ CREATE TABLE carritos (
     FOREIGN KEY (aliasUsuario) REFERENCES usuarios(alias)
 );
 
-
+/**
+ * Tablas modificadas y direcciones borrada
+ */
 CREATE TABLE pedidos (
     id SERIAL PRIMARY KEY,
     fecha DATE,
