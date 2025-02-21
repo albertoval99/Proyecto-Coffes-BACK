@@ -21,4 +21,8 @@ export default class PedidoUseCases {
         if (!aliasusuario) throw new Error("Falta usuario");
         return await this.pedidoRepository.vaciarCarrito(aliasusuario);
     }
+    async getPedidos(aliasusuario: string): Promise<Pedido[]> {
+        if (!aliasusuario) throw new Error("Falta usuario");
+        return await this.pedidoRepository.getPedidos(aliasusuario);
+    }
 }

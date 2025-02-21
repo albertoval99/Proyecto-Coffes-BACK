@@ -25,7 +25,21 @@ router.post("/crearPedido", isAuth, isUser, async (req: Request, res: Response) 
     }
 });
 
-
+// GET http://localhost:3000/api/pedido/getPedidos
+router.get("/getPedidos", isAuth, isUser, async (req: Request, res: Response) => {
+    try {
+        const alias = req.body.user;
+        const aliasValue = alias.alias;
+        const pedidos = await pedidoUseCases.getPedidos(aliasValue);
+        res.status(201).json(pedidos);
+        
+    } catch (error) {
+        const message = { text: `Error obteniendo pedidos: ${error.message || error}` };
+        console.error(error);
+        res.status(500).json(message);
+        
+    }
+});
 
 
 export default router;

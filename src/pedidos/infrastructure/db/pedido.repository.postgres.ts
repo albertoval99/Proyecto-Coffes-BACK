@@ -21,4 +21,13 @@ export default class PedidoRepositoryPostgres implements PedidoRepository {
         const values = [aliasusuario];
         await executeQuery(query, values);
     }
+
+    async getPedidos(aliasusuario: string): Promise<Pedido[]> {
+        const query = `
+            SELECT * FROM pedidos WHERE aliasusuario = $1
+        `;
+        const values = [aliasusuario];
+        const result = await executeQuery(query, values);
+        return result;
+    }
 }
