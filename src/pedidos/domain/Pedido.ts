@@ -1,3 +1,4 @@
+import CafePedido from './CafePedido';
 export default interface Pedido{
     id:number;
     direccion:string;
@@ -6,4 +7,5 @@ export default interface Pedido{
     tarjeta:string;
     fechaCaducidad:Date;
     cvv:number;
+    cafes: CafePedido[];
 }
