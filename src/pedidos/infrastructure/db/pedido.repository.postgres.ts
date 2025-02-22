@@ -54,8 +54,6 @@ export default class PedidoRepositoryPostgres implements PedidoRepository {
                 item.nombretienda
             );
 
-            const precioTotal = cafePrecio * item.cantidad;
-
             const values = [
                 idPedido,
                 item.nombrecafe,
@@ -64,7 +62,7 @@ export default class PedidoRepositoryPostgres implements PedidoRepository {
                 item.pesocafe,
                 item.nombretienda,
                 item.cantidad,
-                precioTotal
+                cafePrecio
             ];
 
             await executeQuery(query, values);
@@ -129,7 +127,8 @@ export default class PedidoRepositoryPostgres implements PedidoRepository {
                     pesocafe: row.pesocafe,
                     nombretienda: row.nombretienda,
                     cantidad: row.cantidad,
-                    precio: row.precio
+                    precio: row.precio,
+                    precio_total: (row.precio * row.cantidad)
                 });
             }
         });

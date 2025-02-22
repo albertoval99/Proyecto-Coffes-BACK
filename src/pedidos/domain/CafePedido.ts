@@ -7,4 +7,5 @@ export default interface CafePedido {
     nombretienda: string;
     cantidad: number;
     precio: number;
+    precio_total: number;
 }
