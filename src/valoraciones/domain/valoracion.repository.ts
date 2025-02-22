@@ -1,3 +1,4 @@
+import Cafe from "../../cafes/domain/Cafe";
 import Valoracion from "./Valoracion";
 
 export default interface ValoracionRepository {
@@ -5,4 +6,5 @@ export default interface ValoracionRepository {
     insertarValoracion(nombrecafe: string, tuestecafe: string, origencafe: string, pesocafe: number, preciocafe: number, nombretienda: string, aliasusuario: string, valoracion: number): Promise<void>;
     actualizarValoracion(nombrecafe: string, tuestecafe: string, origencafe: string, pesocafe: number, preciocafe: number, nombretienda: string, aliasusuario: string, valoracion: number): Promise<void>;
     gestionarValoracionesDelPedido(idPedido:number,valoraciones:Valoracion[]): Promise<void>;
+    obtenerCafesDePedidoById(idPedido:number): Promise<Cafe[]>;
 }

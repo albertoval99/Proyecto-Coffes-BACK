@@ -1,13 +1,16 @@
+import Valoracion from "../domain/Valoracion";
 import ValoracionRepository from "../domain/valoracion.repository";
 
-export default class ValoracionUseCases{
+export default class ValoracionUseCases {
     private valoracionRepository: ValoracionRepository;
 
-    constructor(valoracionRepository: ValoracionRepository){
+    constructor(valoracionRepository: ValoracionRepository) {
         this.valoracionRepository = valoracionRepository;
     }
 
-    async comprobarSiHayValoracion(nombrecafe: string, tuestecafe: string, origencafe: string, pesocafe: number, preciocafe: number, nombretienda: string, aliasusuario: string): Promise<boolean> {
-        return true;
+    async gestionarValoracionesDelPedido(idPedido: number, valoraciones: Valoracion[]): Promise<void> {
+        if (!idPedido) throw new Error("No se encuentra el id del pedido");
+        if (!valoraciones) throw new Error("No se encuentran valoraciones");
+        return this.valoracionRepository.gestionarValoracionesDelPedido(idPedido, valoraciones);
     }
 }
