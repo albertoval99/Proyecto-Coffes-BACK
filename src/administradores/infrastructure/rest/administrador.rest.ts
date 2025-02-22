@@ -47,4 +47,15 @@ router.patch("/actualizar", async (req: Request, res: Response) => {
   }
 });
 
+// GET http://localhost:3000/api/administradores/pedidos
+router.get("/pedidos", async (req: Request, res: Response) => {
+  try {
+    const pedidos = await adminUseCases.getTodosPedidosRealizados();
+    res.status(200).json(pedidos);
+  } catch (error) {
+    console.error("Error en la consulta de pedidos:", error);
+    res.status(500).json({ mensaje: `Error obteniendo pedidos: ${error.message}` });
+  }
+});
+
 export default router;

@@ -1,6 +1,7 @@
 import Administrador from "../../domain/Administrador";
 import AdminRepository from "../../domain/administrador.repository";
 import { executeQuery } from "../../../context/db/postgres.db";
+import Pedido from "../../../pedidos/domain/Pedido";
 
 export default class AdministradorRepositoryPostgres implements AdminRepository {
     async login(administrador: Administrador): Promise<Administrador> {
@@ -10,12 +11,12 @@ export default class AdministradorRepositoryPostgres implements AdminRepository 
         const result = await executeQuery(query, values);
 
         if (result.length === 0) throw new Error("Administrador no encontrado")
-        
-            return {
+
+        return {
             alias: result[0].alias,
             password: result[0].password,
             nombreTienda: result[0].nombretienda,
-            email:result[0].email
+            email: result[0].email
         };
     }
     async getAdminByAlias(alias: string): Promise<Administrador> {
@@ -28,7 +29,7 @@ export default class AdministradorRepositoryPostgres implements AdminRepository 
             alias: result[0].alias,
             password: result[0].password,
             nombreTienda: result[0].nombretienda,
-            email:result[0].email
+            email: result[0].email
         }
     }
 
@@ -66,12 +67,29 @@ export default class AdministradorRepositoryPostgres implements AdminRepository 
 
         const result = await executeQuery(query, values);
 
-        
+
         return {
             alias: result[0].alias,
-            password:result[0].password,
-            nombreTienda:result[0].nombreTienda,
+            password: result[0].password,
+            nombreTienda: result[0].nombreTienda,
             email: result[0].email
         };
+    }
+
+    async getTodosPedidosRealizados(): Promise<Pedido[]> {
+        const query = `
+        SELECT u.nombre, 
+            u.apellidos, 
+            u.alias, 
+            u.email, 
+            p.id AS pedido_id, 
+            p.fecha AS fecha_pedido, 
+            p.direccion
+        FROM usuarios u
+        INNER JOIN pedidos p ON u.alias = p.aliasUsuario
+        `;
+        //INNER JOIN xq asi saco solo los usuarios que tengan pedidos
+        const result = await executeQuery(query);
+        return result;
     }
 }
