@@ -122,7 +122,11 @@ CREATE TABLE valoraciones (
     FOREIGN KEY (aliasUsuario) REFERENCES usuarios (alias)
 );
 
-ALTER TABLE valoraciones ADD COLUMN precioCafe DECIMAL(10, 2) NOT NULL;
+ALTER TABLE valoraciones
+DROP CONSTRAINT valoraciones_pkey;
+ALTER TABLE valoraciones
+ADD COLUMN id SERIAL PRIMARY KEY;
+
 
 CREATE TABLE pedidos (
     id SERIAL PRIMARY KEY,
