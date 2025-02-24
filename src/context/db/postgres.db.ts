@@ -11,6 +11,9 @@ const dbName = process.env.POSTGRES_DB;
 export const pool = new Pool({
   max: 1000,
   connectionString: `postgres://${dbUser}:${dbPassword}@${dbHost}:5432/${dbName}`,
+  ssl: {
+    rejectUnauthorized: false,  // Desactivar la verificación de certificados si usas el certificado de Amazon.
+  },
   idleTimeoutMillis: 30000,
 });
 
